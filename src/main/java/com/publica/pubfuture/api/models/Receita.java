@@ -1,8 +1,6 @@
-package com.publica.pubfuture.api.model;
+package com.publica.pubfuture.api.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
