@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ReceitaController {
@@ -27,6 +28,24 @@ public class ReceitaController {
     @DeleteMapping (path = "/api/receitas/{id}")
     public void deletar (@PathVariable (name="id", required = true) Integer id){
         repository.deleteById(id);
+    }
+
+    @PutMapping (path = "/api/receitas/{id}")
+    public Receita editar(@PathVariable (name = "id", required = true) Integer id, @RequestBody Receita receita){
+        Optional <Receita> rOpt = repository.findById(id);
+
+        if (rOpt.isPresent()){
+            Receita rToEdit = rOpt.get();
+            rToEdit.setConta(receita.getConta());
+            rToEdit.setDataRecebimento(receita.getDataRecebimento());
+            rToEdit.setTipoReceita(receita.getTipoReceita());
+            rToEdit.setDescricao(receita.getDescricao());
+            rToEdit.setValor(receita.getValor());
+            rToEdit.setDataRecebimentoEsperado(receita.getDataRecebimentoEsperado());
+            repository.save(rToEdit);
+            return rToEdit;
+        }
+        return null;
     }
 
 }
