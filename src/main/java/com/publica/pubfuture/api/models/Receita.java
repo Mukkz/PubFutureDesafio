@@ -1,22 +1,26 @@
 package com.publica.pubfuture.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
-import java.sql.ClientInfoStatus;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.math.BigInteger;
+import java.time.LocalDate;
 
 @Entity
 public class Receita {
 
     @Id
-    public Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public BigInteger id;
 
     @Column (nullable = false)
     public Float valor;
 
-    public Date dataRecebimento;
-    public Date dataRecebimentoEsperado;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private LocalDate dataRecebimento;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private LocalDate dataRecebimentoEsperado;
+
     public String descricao;
 
     @Column (nullable = false)
@@ -25,11 +29,12 @@ public class Receita {
     @Column (nullable = false)
     public String tipoReceita;
 
-    public Integer getId() {
+
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -41,19 +46,19 @@ public class Receita {
         this.valor = valor;
     }
 
-    public Date getDataRecebimento() {
+    public LocalDate getDataRecebimento() {
         return dataRecebimento;
     }
 
-    public void setDataRecebimento(Date dataRecebimento) {
+    public void setDataRecebimento(LocalDate dataRecebimento) {
         this.dataRecebimento = dataRecebimento;
     }
 
-    public Date getDataRecebimentoEsperado() {
+    public LocalDate getDataRecebimentoEsperado() {
         return dataRecebimentoEsperado;
     }
 
-    public void setDataRecebimentoEsperado(Date dataRecebimentoEsperado) {
+    public void setDataRecebimentoEsperado(LocalDate dataRecebimentoEsperado) {
         this.dataRecebimentoEsperado = dataRecebimentoEsperado;
     }
 
