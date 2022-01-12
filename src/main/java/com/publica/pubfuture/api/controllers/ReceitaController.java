@@ -2,16 +2,13 @@ package com.publica.pubfuture.api.controllers;
 
 import com.publica.pubfuture.api.models.Receita;
 import com.publica.pubfuture.api.repositories.ReceitaRepository;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
