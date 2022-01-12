@@ -3,6 +3,7 @@ package com.publica.pubfuture.api.controllers;
 import com.publica.pubfuture.api.models.Receita;
 import com.publica.pubfuture.api.repositories.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,20 +22,22 @@ public class ReceitaController {
     }
 
     @PostMapping (path = "/api/receitas")
+    @ResponseStatus (HttpStatus.CREATED)
     public Receita cadastrar(@RequestBody Receita receita){
         return repository.save(receita);
     }
 
     @DeleteMapping (path = "/api/receitas/{id}")
+    @ResponseStatus (HttpStatus.ACCEPTED)
     public void deletar (@PathVariable (name="id", required = true) Integer id){
         repository.deleteById(id);
     }
 
     @PutMapping (path = "/api/receitas/{id}")
+    @ResponseStatus (HttpStatus.ACCEPTED)
     public Receita editar(@PathVariable (name = "id", required = true) Integer id, @RequestBody Receita receita){
         Optional <Receita> rOpt = repository.findById(id);
 
-        if (rOpt.isPresent()){
             Receita rToEdit = rOpt.get();
             rToEdit.setConta(receita.getConta());
             rToEdit.setDataRecebimento(receita.getDataRecebimento());
@@ -44,8 +47,6 @@ public class ReceitaController {
             rToEdit.setDataRecebimentoEsperado(receita.getDataRecebimentoEsperado());
             repository.save(rToEdit);
             return rToEdit;
-        }
-        return null;
     }
 
 }

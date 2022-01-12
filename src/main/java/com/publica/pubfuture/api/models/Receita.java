@@ -1,7 +1,10 @@
 package com.publica.pubfuture.api.models;
 
 import javax.persistence.*;
+import java.sql.ClientInfoStatus;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Receita {
@@ -21,7 +24,6 @@ public class Receita {
 
     @Column (nullable = false)
     public String tipoReceita;
-
 
     public Integer getId() {
         return id;
