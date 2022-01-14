@@ -5,12 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
 
-public interface ReceitaRepository extends JpaRepository<Receita, BigInteger> {
+public interface ReceitaRepository extends JpaRepository<Receita, Integer> {
 
     @Query ("FROM Receita WHERE tipoReceita = :tipoReceita")
     List<Receita> porTipo(String tipoReceita);

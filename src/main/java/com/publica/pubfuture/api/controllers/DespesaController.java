@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -42,23 +41,22 @@ public class DespesaController {
 
     @PostMapping(path = "/api/despesas")
     @ResponseStatus(HttpStatus.CREATED)
-    public Despesa cadastrar(@RequestBody Despesa Despesa){
-        return repository.save(Despesa);
+    public Despesa cadastrar(@RequestBody Despesa despesa){
+        return repository.save(despesa);
     }
 
     @DeleteMapping (path = "/api/despesas/{id}")
     @ResponseStatus (HttpStatus.ACCEPTED)
-    public void deletar (@PathVariable (name="id", required = true) BigInteger id){
+    public void deletar (@PathVariable (name="id", required = true) Integer id){
         repository.deleteById(id);
     }
 
     @PutMapping (path = "/api/despesas/{id}")
     @ResponseStatus (HttpStatus.ACCEPTED)
-    public Despesa editar(@PathVariable (name = "id", required = true) BigInteger id, @RequestBody Despesa despesa){
+    public Despesa editar(@PathVariable (name = "id", required = true) Integer id, @RequestBody Despesa despesa){
         Optional<Despesa> rOpt = repository.findById(id);
 
         Despesa dToEdit = rOpt.get();
-        dToEdit.setConta(despesa.getConta());
         dToEdit.setDataPagamento(despesa.getDataPagamento());
         dToEdit.setTipoDespesa(despesa.getTipoDespesa());
         dToEdit.setValor(despesa.getValor());

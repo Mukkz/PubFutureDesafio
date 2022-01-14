@@ -5,11 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface DespesaRepository extends JpaRepository<Despesa, BigInteger> {
+public interface DespesaRepository extends JpaRepository<Despesa, Integer> {
 
     @Query("FROM Despesa WHERE tipoDespesa = :tipoDespesa")
     List<Despesa> porTipo(String tipoDespesa);
@@ -19,6 +18,5 @@ public interface DespesaRepository extends JpaRepository<Despesa, BigInteger> {
 
     @Query ("SELECT SUM(valor) FROM Despesa")
     BigDecimal totalValor();
-
 
 }

@@ -1,5 +1,6 @@
 package com.publica.pubfuture.api.controllers;
 
+import com.publica.pubfuture.api.models.Conta;
 import com.publica.pubfuture.api.models.Receita;
 import com.publica.pubfuture.api.repositories.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -42,23 +42,22 @@ public class ReceitaController {
 
     @PostMapping (path = "/api/receitas")
     @ResponseStatus (HttpStatus.CREATED)
-    public Receita cadastrar(@RequestBody Receita receita){
+    public Receita cadastrar(@RequestBody Receita receita, @RequestBody Integer conta_id){
         return repository.save(receita);
     }
 
     @DeleteMapping (path = "/api/receitas/{id}")
     @ResponseStatus (HttpStatus.ACCEPTED)
-    public void deletar (@PathVariable (name="id", required = true) BigInteger id){
+    public void deletar (@PathVariable (name="id", required = true) Integer id){
         repository.deleteById(id);
     }
 
     @PutMapping (path = "/api/receitas/{id}")
     @ResponseStatus (HttpStatus.ACCEPTED)
-    public Receita editar(@PathVariable (name = "id", required = true) BigInteger id, @RequestBody Receita receita){
+    public Receita editar(@PathVariable (name = "id", required = true) Integer id, @RequestBody Receita receita){
         Optional <Receita> rOpt = repository.findById(id);
 
             Receita rToEdit = rOpt.get();
-            rToEdit.setConta(receita.getConta());
             rToEdit.setDataRecebimento(receita.getDataRecebimento());
             rToEdit.setTipoReceita(receita.getTipoReceita());
             rToEdit.setDescricao(receita.getDescricao());
