@@ -2,6 +2,7 @@ package com.publica.pubfuture.api.controllers;
 
 import com.publica.pubfuture.api.models.Conta;
 import com.publica.pubfuture.api.models.Receita;
+import com.publica.pubfuture.api.repositories.ContaRepository;
 import com.publica.pubfuture.api.repositories.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,15 @@ public class ReceitaController {
 
     @Autowired
     private ReceitaRepository repository;
+    @Autowired
+    private ContaRepository contaRepository;
 
     @GetMapping (path = "/api/receitas/total")
     public BigDecimal totalValor(){
         return repository.totalValor();
     }
 
+//    Para buscar as receitas por data ou tipo de receita, utilizar os Param: ?tipoReceita=&dataInicial=&dataFinal=
     @GetMapping (path = "/api/receitas")
     public List <Receita> listarTodasReceitas(@RequestParam String tipoReceita,
                                               @RequestParam String dataInicial,
@@ -35,15 +39,16 @@ public class ReceitaController {
             LocalDate dataFinalFormatada = LocalDate.parse(dataFinal);
             return (List<Receita>) repository.porData(dataInicialFormatada, dataFinalFormatada);
         }
-        else{
-            return (List<Receita>) repository.findAll();
-        }
+        else return (List<Receita>) repository.findAll();
     }
 
-    @PostMapping (path = "/api/receitas")
+    @PostMapping (path = "/api/receitas/{id}")
     @ResponseStatus (HttpStatus.CREATED)
-    public Receita cadastrar(@RequestBody Receita receita, @RequestBody Integer conta_id){
-        return repository.save(receita);
+    public Receita cadastrar(@PathVariable (name = "id", required = true) Integer id,@RequestBody Receita receita){
+        Conta conta = contaRepository.findById(id).get();
+        receita.setConta(conta);
+        repository.save(receita);
+        return receita;
     }
 
     @DeleteMapping (path = "/api/receitas/{id}")

@@ -30,7 +30,6 @@ public class ContaController {
     @PostMapping(path = "/api/contas")
     @ResponseStatus(HttpStatus.CREATED)
     public Conta cadastrar(@RequestBody Conta conta){
-
         return repository.save(conta);
     }
 
